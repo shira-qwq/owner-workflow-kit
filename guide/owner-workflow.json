@@ -1,0 +1,192 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Owner 项目工作流程 · 规则示例，非实时项目状态",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "normal",
+        "label": "从目标到可用结果",
+        "focus": [
+          "W01",
+          "W02",
+          "W03",
+          "W04",
+          "W05",
+          "W06"
+        ],
+        "note": "同一对话可以讨论和施工；已批准事项不重复审批。"
+      },
+      {
+        "id": "ideas",
+        "label": "新想法先保存",
+        "focus": [
+          "W01",
+          "W07",
+          "W02"
+        ],
+        "note": "Draft 不等于施工许可。明确要求研究后，再进入有界研究。"
+      },
+      {
+        "id": "recovery",
+        "label": "遇到问题或换人",
+        "focus": [
+          "W04",
+          "W05",
+          "W08",
+          "W09"
+        ],
+        "note": "先保留结果与证据；恢复时检查变化，不无条件重跑。"
+      }
+    ]
+  },
+  "lanes": [
+    {
+      "id": "work",
+      "label": "当前已授权的工作"
+    },
+    {
+      "id": "record",
+      "label": "保留想法与恢复入口"
+    }
+  ],
+  "mainPath": [
+    "W01",
+    "W02",
+    "W03",
+    "W04",
+    "W05",
+    "W06"
+  ],
+  "nodes": [
+    {
+      "id": "W01",
+      "lane": "work",
+      "col": 0,
+      "type": "frontend",
+      "label": "W01 提出目标",
+      "sublabel": "聊天或网页记录"
+    },
+    {
+      "id": "W02",
+      "lane": "work",
+      "col": 1,
+      "type": "backend",
+      "label": "W02 核对可行性",
+      "sublabel": "必要时有界研究"
+    },
+    {
+      "id": "W03",
+      "lane": "work",
+      "col": 2,
+      "type": "security",
+      "label": "W03 明确本次边界",
+      "sublabel": "复用已有批准",
+      "width": 150
+    },
+    {
+      "id": "W04",
+      "lane": "work",
+      "col": 3,
+      "type": "backend",
+      "label": "W04 完成当前任务",
+      "sublabel": "先样本与验证",
+      "width": 150
+    },
+    {
+      "id": "W05",
+      "lane": "work",
+      "col": 4,
+      "type": "security",
+      "label": "W05 检查实际效果",
+      "sublabel": "必要时请你验收",
+      "width": 150
+    },
+    {
+      "id": "W06",
+      "lane": "work",
+      "col": 5,
+      "type": "database",
+      "label": "W06 保存与交付",
+      "sublabel": "版本、证据、下一步"
+    },
+    {
+      "id": "W07",
+      "lane": "record",
+      "col": 0,
+      "type": "database",
+      "label": "W07 想法草稿",
+      "sublabel": "保存不等于开工"
+    },
+    {
+      "id": "W08",
+      "lane": "record",
+      "col": 4,
+      "type": "messagebus",
+      "label": "W08 保留中间结果",
+      "sublabel": "失败原因与下一尝试",
+      "width": 150
+    },
+    {
+      "id": "W09",
+      "lane": "record",
+      "col": 5,
+      "type": "backend",
+      "label": "W09 核对后接手",
+      "sublabel": "沿任务证据继续"
+    }
+  ],
+  "edges": [
+    {
+      "from": "W01",
+      "to": "W02",
+      "role": "main"
+    },
+    {
+      "from": "W02",
+      "to": "W03",
+      "role": "main"
+    },
+    {
+      "from": "W03",
+      "to": "W04",
+      "role": "main"
+    },
+    {
+      "from": "W04",
+      "to": "W05",
+      "role": "main"
+    },
+    {
+      "from": "W05",
+      "to": "W06",
+      "role": "main"
+    },
+    {
+      "from": "W01",
+      "to": "W07",
+      "label": "只是想法",
+      "role": "branch"
+    },
+    {
+      "from": "W07",
+      "to": "W02",
+      "label": "明确要求研究",
+      "role": "branch"
+    },
+    {
+      "from": "W05",
+      "to": "W08",
+      "label": "受阻或暂停",
+      "role": "error"
+    },
+    {
+      "from": "W08",
+      "to": "W09",
+      "label": "恢复工作",
+      "role": "branch"
+    }
+  ]
+}

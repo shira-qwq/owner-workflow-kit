@@ -1,0 +1,9 @@
+/review/
+/Psuit.zip
+/dist/
+*.visual-check.*
+/guide/delivery-checks.json
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
